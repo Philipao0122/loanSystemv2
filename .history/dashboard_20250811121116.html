@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Clientes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+
+  <div class="max-w-5xl mx-auto">
+    <!-- Encabezado -->
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">📋 Gestión de Clientes</h1>
+
+    <!-- Formulario -->
+    <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4">Agregar Cliente</h2>
+      <form id="clienteForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input type="text" id="nombre" placeholder="Nombre" required
+          class="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <input type="text" id="apellido" placeholder="Apellido" required
+          class="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        
+        <input type="tel" id="telefono" placeholder="Teléfono" required
+          class="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <div class="md:col-span-2">
+          <button type="submit"
+            class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">➕ Guardar Cliente</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Lista de clientes -->
+    <div class="bg-white shadow-md rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">Clientes Registrados</h2>
+      <div id="clientesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Aquí se renderizarán las tarjetas de clientes -->
+      </div>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

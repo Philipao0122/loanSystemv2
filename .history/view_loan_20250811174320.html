@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Préstamos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 p-4 text-white flex justify-between">
+        <h1 class="text-lg font-bold">Sistema de Préstamos</h1>
+        <div class="space-x-4">
+            <a href="dashboard.html" class="hover:underline">Inicio</a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto mt-6 p-6 bg-white shadow-md rounded-lg">
+        <h2 class="text-2xl font-semibold mb-4">Lista de Préstamos</h2>
+        
+        <div class="mb-4">
+            <a href="loan.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Nuevo Préstamo
+            </a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full border border-gray-300">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="py-2 px-4 border">Cliente</th>
+                        <th class="py-2 px-4 border">Monto</th>
+                        <th class="py-2 px-4 border">Tasa de Interés</th>
+                        <th class="py-2 px-4 border">Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody id="prestamosTableBody">
+                    <tr>
+                        <td colspan="5" class="py-2 px-4 border text-center text-gray-500">
+                            Cargando préstamos...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Load Supabase client first -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    
+    <!-- Then load app.js which initializes Supabase -->
+    <script type="module" src="/app.js"></script>
+    
+    <!-- Finally load view_loan.js which depends on Supabase -->
+    <script type="module" src="/view_loan.js"></script>
+    
+    <script>
+        // Esperar a que el DOM esté completamente cargado
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('Inicializando vista de préstamos...');
+            
+            // Verificar que Supabase esté disponible
+            if (typeof window.supabase === 'undefined' || typeof window.supabase.from !== 'function') {
+                console.error('Error: Supabase no está correctamente inicializado');
+                
+                // Mostrar mensaje de error al usuario
+                const tableBody = document.getElementById("prestamosTableBody") || document.body;
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="py-4 text-center text-red-500">
+                            Error: No se pudo conectar con la base de datos
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Inicializar la vista de préstamos
+            if (typeof cargarPrestamos === 'function') {
+                try {
+                    await cargarPrestamos(window.supabase);
+                } catch (error) {
+                    console.error('Error al cargar préstamos:', error);
+                    const tableBody = document.getElementById("prestamosTableBody") || document.body;
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="py-4 text-center text-red-500">
+                                Error al cargar los préstamos: ${error.message}
+                            </td>
+                        </tr>
+                    `;
+                }
+            } else {
+                console.error('Error: La función cargarPrestamos no está definida');
+            }
+        });
+    </script>
+</body>
+</html>
