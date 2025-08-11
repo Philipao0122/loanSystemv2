@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel de Clientes</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script type="module" src="app.js"></script>
+  <!-- Load Supabase client first -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-gray-100 min-h-screen">
 
@@ -84,6 +84,10 @@
     </div>
   </div>
 
-  <script src="dashboard.js"></script>
+  <!-- Load app.js first to initialize Supabase -->
+  <script type="module" src="/app.js"></script>
+  
+  <!-- Then load dashboard.js -->
+  <script type="module" src="/dashboard.js"></script>
 </body>
 </html>
